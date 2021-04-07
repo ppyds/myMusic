@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import search from "@/store/modules/search";
 
 export default createStore({
   state: {
@@ -6,7 +7,12 @@ export default createStore({
   mutations: {
   },
   actions: {
+    haha(){
+
+    }
   },
   modules: {
+    search,
+    namespaced:true
   }
 })

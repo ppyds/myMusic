@@ -1,13 +1,8 @@
 <template>
   <div id="box">
+    <Header/>
     <div id="top">
       <div id="nav_box">
-        <SearchInput
-            :prompt-arr="promptArr"
-            active-width="400px"
-            @_tips="prompt"
-            @_get="_get"
-        />
         <div id="nav">
           <router-link to="/">首页</router-link>
           <router-link to="/player">播放</router-link>
@@ -15,7 +10,18 @@
           <router-link to="/Collect">收藏</router-link>
         </div>
       </div>
-      <router-view style="flex: 1"/>
+      <div style="flex: 1;padding-top: 10px">
+        <div>
+          <SearchInput
+              style="display: block; width: 70%;min-width: 500px;margin: auto"
+              :prompt-arr="promptArr"
+              active-width="70%"
+              @_tips="prompt"
+              @_get="_get"
+          />
+        </div>
+        <router-view />
+      </div>
 
     </div>
     <PlayerBar/>
@@ -24,7 +30,7 @@
 <script>
 import PlayerBar from '@/components/PlayerBar'
 import SearchInput from '@/components/SearchInput'
-
+import Header from '@/components/Header'
 import {computed, defineComponent, ref} from "vue"
 import {useStore} from 'vuex'
 
@@ -32,7 +38,8 @@ export default defineComponent({
   name: "App",
   components: {
     PlayerBar,
-    SearchInput
+    SearchInput,
+    Header
   },
   setup(props, context) {
     let store = useStore()
@@ -56,7 +63,8 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   height: 100vh;
-
+  border-radius: 50px;
+  overflow: hidden;
 }
 
 #top {

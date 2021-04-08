@@ -16,7 +16,11 @@ async function createWindow() {
     const win = new BrowserWindow({
         width: 1022,
         height: 600,
-        autoHideMenuBar: true,
+        // autoHideMenuBar: true,
+        transparent:true,
+        // show: false,
+        fullscreen: true,
+        frame: false,
         webPreferences: {
             webSecurity: false,
             // Use pluginOptions.nodeIntegration, leave this alone

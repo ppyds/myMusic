@@ -101,3 +101,8 @@ a, a:hover {
     --border-radius_1:4px;
     --px8:8px;
 }
+html, body {
+
+    background: rgba(0, 0, 0, 0) !important;
+
+}

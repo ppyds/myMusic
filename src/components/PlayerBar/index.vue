@@ -26,7 +26,9 @@ export default defineComponent({
 
 <style scoped>
 #player_bar {
+  backdrop-filter: var(--webkit_backdrop_filter_1);
   height: 72px;
-  border: 1px solid var(--border_color1)
+  border: 1px solid var(--border_color1);
+  flex-shrink: 0;
 }
 </style>

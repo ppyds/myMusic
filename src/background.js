@@ -1,10 +1,12 @@
 'use strict'
 
-import {app, BrowserWindow, protocol} from 'electron'
+import {app, BrowserWindow, ipcMain, protocol, screen} from 'electron'
 import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, {VUEJS_DEVTOOLS} from 'electron-devtools-installer'
+import userFunction from '@/electronMain/index' //引入 主进程的一些事件，方法 写在一个js文件里 太乱了
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
+export let win
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -13,19 +15,23 @@ protocol.registerSchemesAsPrivileged([
 
 async function createWindow() {
     // Create the browser window.
-    const win = new BrowserWindow({
-        width: 1022,
-        height: 600,
-        // autoHideMenuBar: true,
-        transparent:true,
-        // show: false,
-        fullscreen: true,
+    win = new BrowserWindow({
+        width: 1010,
+        height: 610,
+        minWidth: 1010,
+        minHeight: 610,
+        transparent: true,
+        maximizable: false,
         frame: false,
         webPreferences: {
+            // devTools:false,
+            // experimentalFeatures:true,
             webSecurity: false,
             // Use pluginOptions.nodeIntegration, leave this alone
             // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-            nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
+            // nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+            nodeIntegration: true,
+            enableRemoteModule: true
         }
     })
 
@@ -36,17 +42,22 @@ async function createWindow() {
     } else {
         createProtocol('app')
         // Load the index.html when not in development
-        win.loadURL('app://./index.html')
+        await win.loadURL('app://./index.html')
     }
+
+
 }
 
+// app.disableHardwareAcceleration()
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
         app.quit()
+        app.exit()
     }
+
 })
 
 app.on('activate', () => {
@@ -67,7 +78,8 @@ app.on('ready', async () => {
             console.error('Vue Devtools failed to install:', e.toString())
         }
     }
-    createWindow()
+    await createWindow()
+    createOk()
 })
 
 // Exit cleanly on request from parent process in development mode.
@@ -83,4 +95,14 @@ if (isDevelopment) {
             app.quit()
         })
     }
+}
+
+function createOk() {
+    userFunction({
+        win,
+        app,
+        ipcMain,
+        BrowserWindow,
+        screen
+    })
 }

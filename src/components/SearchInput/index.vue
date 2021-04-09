@@ -113,7 +113,6 @@ export default defineComponent({
   }
 })
 </script>
-
 <style scoped>
 #search_input {
   height: 30px;
@@ -131,9 +130,9 @@ export default defineComponent({
 }
 
 .box {
-  border: 1px solid var(--border_color1);
+  /*border: 1px solid var(--border_color1);*/
+  box-shadow: var(--border_color1) 0 0 5px 0;
   border-radius: var(--border-radius_1);
-  background: var(--background);
   min-height: 30px;
   overflow: hidden
 }
@@ -153,7 +152,7 @@ input {
   width: 100%;
   display: block;
   text-indent: inherit;
-
+  background: var(--color_1);
 }
 
 input.active {

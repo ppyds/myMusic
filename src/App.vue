@@ -1,104 +1,64 @@
 <template>
-  <div id="box">
-    <Header/>
-    <div id="top">
-      <div id="nav_box">
-        <div id="nav">
-          <router-link to="/">首页</router-link>
-          <router-link to="/player">播放</router-link>
-          <router-link to="/search">搜索</router-link>
-          <router-link to="/Collect">收藏</router-link>
-        </div>
-      </div>
-      <div style="flex: 1;padding-top: 10px">
-        <div>
-          <SearchInput
-              style="display: block; width: 70%;min-width: 500px;margin: auto"
-              :prompt-arr="promptArr"
-              active-width="70%"
-              @_tips="prompt"
-              @_get="_get"
-          />
-        </div>
-        <router-view />
-      </div>
-
+  <div id="window" :style="{
+    borderRadius:isMaxWindow?'0px':''
+  }">
+    <div id="window_background">
+      <img alt="" src="https://uploadfile.bizhizu.cn/2014/0124/20140124114300563.jpg">
     </div>
-    <PlayerBar/>
+    <div id="view">
+      <Header/>
+      <Index/>
+    </div>
   </div>
 </template>
 <script>
-import PlayerBar from '@/components/PlayerBar'
-import SearchInput from '@/components/SearchInput'
+const {remote} = window.require('electron')
+import Index from '@/components'
 import Header from '@/components/Header'
-import {computed, defineComponent, ref} from "vue"
+import {computed, defineComponent} from 'vue'
 import {useStore} from 'vuex'
 
 export default defineComponent({
-  name: "App",
+  name: 'App',
   components: {
-    PlayerBar,
-    SearchInput,
+    Index,
     Header
   },
-  setup(props, context) {
-    let store = useStore()
-    let promptArr = computed(() => store.getters["search/getPromptArr"])
-    let prompt = store._actions['search/prompt'][0]
-    let search = store._actions['search/search'][0]
-    const _get = (key) =>{
-      console.log(key)
-      search({key})
-    }
+  setup() {
+    const store = useStore()
+    let isMaxWindow = computed(() => store.getters.isMaxWindow)
     return {
-      promptArr,
-      prompt,
-      _get
+      isMaxWindow
     }
   }
 })
 </script>
 <style>
-#box {
+#window {
+  position: relative;
+  height: 100%;
+  border-radius: var(--border-radius_2);
+  overflow: hidden;
+  box-shadow: #42b983 0 0 5px 0;
+}
+
+#window #window_background {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+#window img {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+#view {
+  backdrop-filter: var(--webkit_backdrop_filter_1);
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  border-radius: 50px;
-  overflow: hidden;
-}
-
-#top {
-  display: flex;
-  flex: 1;
-}
-
-#nav_box {
-  width: 198px;
-  border-right: 1px solid var(--border_color1);
-  padding: var(--padding_12);
-  text-indent: var(--px8);
-  box-sizing: border-box;
-  flex-shrink: 0;
-}
-
-#nav {
-  padding-top: 20px;
-}
-
-#nav_box #nav a {
-  display: block;
-  height: 36px;
-  font-size: var(--font_smale);
-  line-height: 36px;
-  border-radius: var(--border-radius_1);
-  margin: 6px 0;
-}
-
-#nav_box #nav a.router-link-exact-active {
-  color: var(--color_2);
-  background: var(--color_1);
-  font-weight: var(--active_font_style);
-  box-shadow: var(--color_2) 0 0 5px 0;
-  font-size: var(--font_big);
 }
 </style>

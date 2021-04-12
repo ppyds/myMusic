@@ -1,5 +1,5 @@
 <template>
-  <button :class="{active:active}" :style="{height,width}" @click="click" @mousedown="mouseDown" @mouseup="mouseUp">
+  <button  :style="{height,width}" @click="click">
     {{ value }}
   </button>
 </template>
@@ -22,18 +22,6 @@ export default defineComponent({
     width: {
       type: String
     }
-  },
-  setup(props, context) {
-    let active = ref(false)
-    const mouseDown = () =>
-        active.value = true
-    const mouseUp = () =>
-        active.value = false
-    return {
-      active,
-      mouseDown,
-      mouseUp
-    }
   }
 })
 </script>
@@ -50,7 +38,7 @@ button {
   font-weight: var(--active_font_style);
 }
 
-button.active {
+button:active {
   box-shadow: var(--color_2) 0 0 10px 0;
   transform: scale(.95);
 }

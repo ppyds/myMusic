@@ -3,10 +3,10 @@
     <div id="top">
       <div id="nav_box">
         <div id="nav">
-          <router-link to="/">首页</router-link>
-          <router-link to="/player">播放</router-link>
-          <router-link to="/search">搜索</router-link>
-          <router-link to="/Collect">收藏</router-link>
+          <router-link to="mainWindow">首页</router-link>
+          <router-link to="mainWindow/player">播放</router-link>
+          <router-link to="mainWindow/search">搜索</router-link>
+          <router-link to="mainWindow/Collect">收藏</router-link>
         </div>
       </div>
 
@@ -23,7 +23,7 @@
 import {defineComponent} from "vue";
 import PlayerBar from "@/components/PlayerBar";
 import Header from "@/components/Header";
-
+const a = window.require('electron').remote
 export default defineComponent({
   name: "Index",
   components: {
@@ -31,7 +31,7 @@ export default defineComponent({
     Header
   },
   setup(props, context) {
-
+    console.log(a.getCurrentWindow())
   }
 })
 </script>
@@ -82,5 +82,7 @@ export default defineComponent({
   background: var(--color_1);
   height: 100%;
   width: 100%;
+  padding-top: 15px;
+  box-sizing: border-box;
 }
 </style>

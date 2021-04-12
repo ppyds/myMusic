@@ -1,53 +1,15 @@
 'use strict'
 
-import {app, BrowserWindow, ipcMain, protocol, screen} from 'electron'
-import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
+import {app, BrowserWindow, protocol,Menu} from 'electron'
 import installExtension, {VUEJS_DEVTOOLS} from 'electron-devtools-installer'
-import userFunction from '@/electronMain/index' //引入 主进程的一些事件，方法 写在一个js文件里 太乱了
-
+import createWindow from "@/electronMain/createWindow";
+import userFunction from "@/electronMain/index"
+Menu.setApplicationMenu(null)//去除窗体菜单栏
 const isDevelopment = process.env.NODE_ENV !== 'production'
-export let win
-
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
     {scheme: 'app', privileges: {secure: true, standard: true}}
 ])
-
-async function createWindow() {
-    // Create the browser window.
-    win = new BrowserWindow({
-        width: 1010,
-        height: 610,
-        minWidth: 1010,
-        minHeight: 610,
-        transparent: true,
-        maximizable: false,
-        frame: false,
-        webPreferences: {
-            // devTools:false,
-            // experimentalFeatures:true,
-            webSecurity: false,
-            // Use pluginOptions.nodeIntegration, leave this alone
-            // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-            // nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-            nodeIntegration: true,
-            enableRemoteModule: true
-        }
-    })
-
-    if (process.env.WEBPACK_DEV_SERVER_URL) {
-        // Load the url of the dev server if in development mode
-        await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-        if (!process.env.IS_TEST) win.webContents.openDevTools()
-    } else {
-        createProtocol('app')
-        // Load the index.html when not in development
-        await win.loadURL('app://./index.html')
-    }
-
-
-}
-
 // app.disableHardwareAcceleration()
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -55,11 +17,9 @@ app.on('window-all-closed', () => {
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
         app.quit()
-        app.exit()
     }
 
 })
-
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -78,7 +38,17 @@ app.on('ready', async () => {
             console.error('Vue Devtools failed to install:', e.toString())
         }
     }
-    await createWindow()
+    await createWindow({
+        name: 'mainWindow',
+        width: 1010,
+        height: 610,
+        minWidth: 1010,
+        minHeight: 610,
+        transparent: true,
+        maximizable: false,
+        frame: false,
+        isMultiWindow: false,
+    })
     createOk()
 })
 
@@ -98,11 +68,8 @@ if (isDevelopment) {
 }
 
 function createOk() {
+
     userFunction({
-        win,
-        app,
-        ipcMain,
-        BrowserWindow,
-        screen
+        // win
     })
 }

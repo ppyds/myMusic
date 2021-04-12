@@ -1,8 +1,8 @@
 <template>
   <div id="ControlButton">
-    <div class="btn iconfont" @click="minSizeWindow">&#xe624;</div>
+    <div class="btn iconfont" @click="() =>minSizeWindow('mainWindow')">&#xe624;</div>
     <div class="btn iconfont" @click="max_min_Window">&#xe746;</div>
-    <div class="btn iconfont" @click="closeWindow">&#xe66c;</div>
+    <div class="btn iconfont" @click="() =>closeWindow('mainWindow')">&#xe66c;</div>
   </div>
 </template>
 
@@ -20,11 +20,11 @@ export default defineComponent({
     const max_min_Window = () => {
       switch (max) {
         case false:
-          store._actions.maxWindow[0]()
+          store._actions.maxWindow[0]('mainWindow')
           max = true
           break
         case true:
-          store._actions.activeWindow[0]()
+          store._actions.activeWindow[0]('mainWindow')
           max = false
       }
     }

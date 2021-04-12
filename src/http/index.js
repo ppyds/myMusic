@@ -4,13 +4,14 @@ axios.interceptors.response.use(res => {
     return res.data
 })
 
-const BASE_URL = 'http://localhost:3200/'
-export const prompt = (params) =>axios({ //搜索提示
-    url:BASE_URL + 'getSmartbox',
-    params
+const BASE_URL = 'https://netease-cloud-music-api-1.vercel.app/'
+const banner = () =>axios({
+    url:BASE_URL +'banner'
 })
 
-export const search = (params) =>axios({
-    url:BASE_URL + 'getSearchByKey', //搜索
-    params
-})
+import login from './login'
+
+export default {
+    ...login(axios,BASE_URL),
+    banner
+}

@@ -5,15 +5,14 @@
             appRegion: isMaxWindow?'no-drag':'drag'
           }"
   >
-    <div id="Search_box">
-      <SearchInput
-          :prompt-arr="promptArr"
-          active-width="70%"
-          style="display: block; width: 70%;min-width: 500px;margin: auto;app-region:no-drag"
-          @_get="_get"
-          @_tips="prompt"
-      />
+    <div id="user" @click="login">
+      <el-avatar class="userIcon" icon="el-icon-user-solid" src="http://p1.music.126.net/BSntLesLXduQc1Gqmkqd0A==/109951165873226696.jpg"></el-avatar>
+      <strong class="userName">444444</strong>
+<!--      <Login/>-->
     </div>
+    <div id="Search_box">
+    </div>
+
     <div id="ControlButton_box">
       <ControlButton/>
     </div>
@@ -21,31 +20,35 @@
 </template>
 
 <script>
-import SearchInput from "@/components/SearchInput";
+const {ipcRenderer} = window.require('electron')
 import ControlButton from "@/components/ControlButton";
+import Login from '@/views/loginRegisterWindow/Login'
 import {computed, defineComponent} from 'vue'
 import {useStore} from "vuex";
 
 export default defineComponent({
   name: 'Header',
   components: {
-    SearchInput,
-    ControlButton
+    ControlButton,
+    Login
   },
   setup() {
     let store = useStore()
-    let promptArr = computed(() => store.getters["search/getPromptArr"])
-    let prompt = store._actions['search/prompt'][0]
-    let search = store._actions['search/search'][0]
     let isMaxWindow = computed(() => store.getters.isMaxWindow)
-    const _get = (key) => {
-      search({key})
+    const login = () =>{
+      ipcRenderer.send('createWindow',{
+        parentName:'mainWindow',
+        width:400,
+        height:500,
+        routePath:'logInRegisterWindow',
+        resizable:false,
+        movable:false,
+        minimizable:false
+      })
     }
     return {
-      promptArr,
-      prompt,
       isMaxWindow,
-      _get
+      login
     }
   }
 })
@@ -59,16 +62,34 @@ export default defineComponent({
   user-select: none;
   display: flex;
 }
-
+#user{
+  height:100%;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  position: relative;
+}
+#user .userName{
+  padding-left: 6px;
+  font-size: var(--font_big);
+  color:var(--color_2);
+  -webkit-app-region: no-drag;
+}
+#user .userIcon{
+  box-shadow: var(--color_2) 0 0 10px 0;
+  -webkit-app-region: no-drag;
+}
 #Search_box {
   flex: 1;
   display: flex;
   justify-content: center;
   align-content: center;
   height: 100%;
+  -webkit-app-region: no-drag;
 }
 
 #ControlButton_box {
   padding-right: 20px;
+  -webkit-app-region: no-drag;
 }
 </style>

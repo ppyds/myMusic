@@ -1,5 +1,6 @@
 import {createStore} from 'vuex'
 import search from "@/store/modules/search";
+import home from "@/store/modules/home";
 
 const {remote, ipcRenderer} = window.require('electron')
 
@@ -11,6 +12,7 @@ export default createStore({
             x: null,
             y: null
         },
+        mainScreen: {},//electron.screen.getPrimaryDisplay()
         isMaxWindow: false
     },
     mutations: {
@@ -19,6 +21,9 @@ export default createStore({
         },
         setIsMaxWindow(state, data) {
             state.isMaxWindow = data
+        },
+        setMainScreen(state, data) {
+            state.mainScreen = data
         }
     },
     getters: {
@@ -27,38 +32,49 @@ export default createStore({
         },
         isMaxWindow(state) {
             return state.isMaxWindow
+        },
+        mainScreen(state) {
+            return state.mainScreen
         }
     },
     actions: {
         minWindow(context) {
             remote.getCurrentWindow().minimize()
-            context.commit('setIsMaxWindow', false)
         },
-         maxWindow(context) {
-             ipcRenderer.send('getWindowOptions')
-             ipcRenderer.on('getWindowOptions_back', (event, windowSize) => {
+        async maxWindow(context,name) {
+            console.log(name)
+            ipcRenderer.send('getWindowOptions',name)
+            ipcRenderer.on('getWindowOptions_back', (event, obj) => {
+                let {windowSize, mainScreen} = obj
                 context.commit('setActiveWinSize', windowSize)
-                console.log(data)
+                context.commit('setMainScreen', mainScreen)
+                setWindow(context,name)//在回调函数中调用 否则 会造成参数undefined
             })
-             ipcRenderer.send('setWindow', {
-                width: 1930,
-                height: 1090,
-                x: 0,
-                y: 0
-            })
-             context.commit('setIsMaxWindow', true)
+
+            function setWindow(context,name) {
+                ipcRenderer.send('setWindow', {
+                    width: context.getters.mainScreen.size.width,
+                    height: context.getters.mainScreen.size.height - 1,
+                    x: 0,
+                    y: 0
+                },name)
+                context.commit('setIsMaxWindow', true)
+                ipcRenderer.send('setResizable', false,name)
+            }
         },
-        activeWindow(context) {
-            ipcRenderer.send('setWindow', {...context.getters.activeWinSize})
+        activeWindow(context,name) {
+            console.log(name)
+            ipcRenderer.send('setResizable', true,name)
+            ipcRenderer.send('setWindow', {...context.getters.activeWinSize},name)
             context.commit('setIsMaxWindow', false)
         },
         closeWindow(context) {
             remote.getCurrentWindow().close()
-            context.commit('setIsMaxWindow', false)
         }
     },
     modules: {
         search,
+        home,
         namespaced: true
     }
 })

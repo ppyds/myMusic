@@ -1,29 +1,24 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
+import mainWindowChildren from './mainWindow'
+import logInRegisterWindowChildren from './logInRegisterWindow'
 
-const Home = () => import('../views/Home')
-const Player = () => import('../views/Player')
-const Collect = () => import('../views/Collect')
-const Search = () => import('../views/Search')
+const MainWindow = () => import('@/views/mainWindow/mainWindow')
+const LoginRegisterWindow = () => import('@/views/loginRegisterWindow/LoginRegisterWindow')
 const routes = [
+
     {
-        path: '/',
-        component: Home,
-        name:'Home'
+        path: '/mainWindow',
+        component: MainWindow,
+        children: mainWindowChildren
     },
     {
-        path:'/player',
-        component: Player,
-        name:'Player'
+        path: '/logInRegisterWindow',
+        component: LoginRegisterWindow,
+        children: logInRegisterWindowChildren
     },
     {
-        path:'/collect',
-        component: Collect,
-        name:'Collect'
-    },
-    {
-        path:'/search',
-        component: Search,
-        name:'Search'
+        path: '',
+        redirect: '/mainWindow'
     }
 ]
 

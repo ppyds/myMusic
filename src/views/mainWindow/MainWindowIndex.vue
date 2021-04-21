@@ -2,16 +2,19 @@
   <div id="box">
     <div id="top">
       <div id="nav_box">
+        {{$route.path}}
         <div id="nav">
-          <router-link to="mainWindow">首页</router-link>
-          <router-link to="mainWindow/player">播放</router-link>
-          <router-link to="mainWindow/search">搜索</router-link>
-          <router-link to="mainWindow/Collect">收藏</router-link>
+          <router-link to="/mainWindow/home">首页</router-link>
+          <router-link to="/mainWindow/player">播放</router-link>
+          <router-link to="/mainWindow/search">搜索</router-link>
+          <router-link to="/mainWindow/Collect">收藏</router-link>
         </div>
       </div>
 
       <div id="router_view_box">
-        <router-view/>
+        <keep-alive>
+          <router-view/>
+        </keep-alive>
       </div>
 
     </div>
@@ -23,15 +26,12 @@
 import {defineComponent} from "vue";
 import PlayerBar from "@/components/PlayerBar";
 import Header from "@/components/Header";
-const a = window.require('electron').remote
+import {useRouter} from 'vue'
 export default defineComponent({
   name: "Index",
   components: {
     PlayerBar,
     Header
-  },
-  setup(props, context) {
-    console.log(a.getCurrentWindow())
   }
 })
 </script>
@@ -70,7 +70,7 @@ export default defineComponent({
   margin: 6px 0;
 }
 
-#nav_box #nav a.router-link-exact-active {
+#nav_box #nav a.router-link-active {
   color: var(--color_2);
   background: var(--color_1);
   font-weight: var(--active_font_style);
@@ -80,9 +80,10 @@ export default defineComponent({
 
 #router_view_box {
   background: var(--color_1);
-  height: 100%;
-  width: 100%;
   padding-top: 15px;
   box-sizing: border-box;
+  flex: 1;
+  overflow: hidden;
+  overflow-y: auto;
 }
 </style>

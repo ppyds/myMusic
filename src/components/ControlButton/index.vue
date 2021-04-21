@@ -16,7 +16,7 @@ export default defineComponent({
     const store = useStore()
     let max = false
     const minSizeWindow = () => store._actions.minWindow[0]()
-    const closeWindow = () => store._actions.closeWindow[0]()
+    const closeWindow = () => store.dispatch('closeWindow','mainWindow')
     const max_min_Window = () => {
       switch (max) {
         case false:

@@ -23,7 +23,6 @@ import Index from '@/views/mainWindow/MainWindowIndex'
 import Header from '@/components/Header'
 import {computed, defineComponent} from 'vue'
 import {useStore} from 'vuex'
-import {useRoute} from "vue-router"
 
 
 export default defineComponent({
@@ -33,8 +32,6 @@ export default defineComponent({
     Header
   },
   setup() {
-    const route = useRoute()
-    console.log(route.path)
     const store = useStore()
     let isMaxWindow = computed(() => store.getters.isMaxWindow)
     return {

@@ -1,8 +1,7 @@
 <template>
-  <div class="swiper-container">
+  <div class="swiper-container" v-if="list">
     <div class="swiper-wrapper">
-      <div v-if="list.length === 0" class="swiper-slide"></div>
-      <div v-for="item in list" v-else class="swiper-slide">
+      <div v-for="item in list" class="swiper-slide">
         <img :src="item.imageUrl" alt="">
       </div>
     </div>
@@ -12,8 +11,6 @@
 </template>
 <script>
 import {defineComponent, onMounted, watch} from "vue";
-// import Swiper from "swiper"
-// import 'swiper/swiper-bundle.css'
 export default defineComponent({
   name: 'Banner',
   props: {
@@ -28,8 +25,6 @@ export default defineComponent({
     watch(props, () => {
       setTimeout(() => {
         var swiper = new Swiper('.swiper-container', {
-          // observer: true,//修改swiper自己或子元素时，自动初始化swiper
-          // observeParents: true,//修改swiper的父元素时，自动初始化swiper
           effect: 'coverflow',
           grabCursor: true,
           loop: true,

@@ -1,36 +1,82 @@
 <template>
-  <div>
-    <mBtn @click="click"  value="按钮"/>
+  <!--    搜索类型；默认为 1 即单曲 , 取值意义 : 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频, 1018:综合-->
+  <div id="search_link_box_tab">
+    <div id="search_link">
+      <router-link :to="'/mainWindow/search/single/'+searchKey" tag="li">单曲</router-link>
+      <router-link :to="'/mainWindow/search/album/'+searchKey" tag="li">专辑</router-link>
+      <div class="line"/>
+    </div>
+    <transition>
+      <keep-alive>
+        <router-view id="router_box"/>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
 <script>
-import SearchInput from '@/components/SearchInput'
-import mBtn from '@/components/mBtn'
-import {computed, defineComponent} from "vue"
-import {useStore} from "vuex";
-import antiShake from "@/tools/antiShake";
+import {computed, defineComponent, watch} from "vue"
+import {useRoute, useRouter} from 'vue-router'
+import {useStore} from 'vuex'
+
 export default defineComponent({
   name: "Search",
-  components: {
-    SearchInput,
-    mBtn
-  },
-  setup(props, context) {
+  setup() {
+
+    let route = useRoute()
+    let router = useRouter()
     let store = useStore()
-    const click = antiShake(() =>{
-      console.log(props)
+    let searchKey = computed(() => store.getters['search/getSearchKey'])
+    let path = route.path.slice(0, route.path.lastIndexOf('/') + 1);
+    router.replace(path + searchKey.value)
+    watch(searchKey, () => {
+      let path = route.path.slice(0, route.path.lastIndexOf('/') + 1);
+      router.replace(path + searchKey.value)
     })
     return {
-      click
+      searchKey
     }
   }
 })
 </script>
 
 <style scoped>
-.search {
-  width: 500px;
-  margin: auto;
+#search_link_box_tab {
+  height: 100%;
+}
+
+#search_link_box_tab div#search_link {
+  display: flex;
+  padding: 0 20px;
+  margin-left: 1px;
+
+  box-sizing: border-box;
+}
+
+#search_link_box_tab div#search_link a {
+  display: block;
+  line-height: 30px;
+  padding: 0 15px;
+  font-size: var(--font_smale);
+  border: 1px solid var(--color_2);
+  margin-left: -1px;
+  background: var(--color_1);
+}
+
+#search_link_box_tab div#search_link a.router-link-active {
+  border-bottom-color: transparent;
+  color: var(--color_2);
+  background: transparent;
+}
+
+#search_link_box_tab div#search_link .line {
+  flex: 1;
+  border-bottom: 1px solid var(--color_2);
+}
+
+#router_box {
+  margin: 0 20px;
+  border: 1px solid var(--color_2);
+  border-top: none;
 }
 </style>

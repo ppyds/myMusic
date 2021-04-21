@@ -1,15 +1,30 @@
-import Menu, {app,BrowserWindow} from "electron";
+import {app, BrowserWindow} from "electron";
 import {createProtocol} from "vue-cli-plugin-electron-builder/lib";
 
-global.windowAObj = {}//用于存放所有窗口
+global.windowObjs = {}//用于存放所有窗口
 export default async function createWindow(options) {
-
+    //限制只能开启一个应用(4.0以上版本)
+    const gotTheLock = await app.requestSingleInstanceLock()
+    if (!gotTheLock) {
+        await app.quit()
+        return
+    } else {
+        await app.on('second-instance', (event, commandLine, workingDirectory) => {
+            // 当运行第二个实例时,将会聚焦到mainWindow这个窗口
+            if (win) {
+                if (win.isMinimized()) win.restore()
+                win.focus()
+                win.show()
+                win.setPosition(0, 0)
+            }
+        })
+    }
     // Create the browser window.
     if (options.parentName) {
         options = {
             ...options,
             modal: true,
-            parent: global.windowAObj[options.parentName]
+            parent: global.windowObjs[options.parentName]
         }
     }
     const routePath = options.routePath ? options.routePath : ''
@@ -28,6 +43,10 @@ export default async function createWindow(options) {
         createProtocol('app')
         await win.loadURL('app://./index.html/#' + routePath)
     }
-    global.windowAObj[options.name] = win;
-    win.webContents.openDevTools({mode:'bottom'})
+
+
+    global.windowObjs[options.name] = win;
+    win.on('closed', () => {
+        win = null
+    })
 }

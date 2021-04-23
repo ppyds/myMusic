@@ -1,5 +1,6 @@
 <template>
   <!--    搜索类型；默认为 1 即单曲 , 取值意义 : 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频, 1018:综合-->
+
   <div id="search_link_box_tab">
     <div id="search_link">
       <router-link :to="'/mainWindow/search/single/'+searchKey" tag="li">单曲</router-link>
@@ -41,11 +42,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#search_link_box_tab {
-  height: 100%;
-}
 
-#search_link_box_tab div#search_link {
+#search_link {
   display: flex;
   padding: 0 20px;
   margin-left: 1px;
@@ -53,7 +51,7 @@ export default defineComponent({
   box-sizing: border-box;
 }
 
-#search_link_box_tab div#search_link a {
+div#search_link a {
   display: block;
   line-height: 30px;
   padding: 0 15px;
@@ -63,13 +61,13 @@ export default defineComponent({
   background: var(--color_1);
 }
 
-#search_link_box_tab div#search_link a.router-link-active {
+#search_link a.router-link-active {
   border-bottom-color: transparent;
   color: var(--color_2);
   background: transparent;
 }
 
-#search_link_box_tab div#search_link .line {
+#search_link .line {
   flex: 1;
   border-bottom: 1px solid var(--color_2);
 }
@@ -78,5 +76,7 @@ export default defineComponent({
   margin: 0 20px;
   border: 1px solid var(--color_2);
   border-top: none;
+  flex: 1;
+  overflow: hidden;
 }
 </style>

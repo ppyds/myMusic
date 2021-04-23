@@ -1,34 +1,34 @@
 <template>
-  <div id="Slider"
-       ref="EleSlider"
-       :style="{
-  backgroundImage:`linear-gradient(to right,red ${!isMousemove?position / max* 100:moveLeft}%,transparent 0)`,
+    <div id="Slider"
+         ref="EleSlider"
+         :style="{
+  backgroundImage:`linear-gradient(to right,red ${!isMousemove?position / max* 100:moveLeft}%,pink 0)`,
 }"
-       @mousedown="mouseDown"
-       @mouseup="mouseUp">
-    <div
-        :class="{
+         @mousedown="mouseDown"
+         @mouseup="mouseUp">
+      <div
+          :class="{
           active:active
         }"
-        :style="{
+          :style="{
           left:`${!isMousemove?position / max* 100:moveLeft}%`
         }"
-        class="radio"
-    >
-    </div>
-    <div
-        :class="{
+          class="radio"
+      >
+      </div>
+      <div
+          :class="{
           active:active
         }"
-        class="tips"
-    >
-      <p>555555555</p>
+          class="tips"
+      >
+        <p>{{ tips }}</p>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
-import {defineComponent, ref} from 'vue'
+import {computed, defineComponent, ref} from 'vue'
 import {offsetBodyLeft} from '@/tools'
 
 export default defineComponent({
@@ -49,17 +49,22 @@ export default defineComponent({
     let moveLeft = ref(0)
     let EleSlider = ref(null)
     let active = ref(false)
+    let tips = ref(computed(() =>props.tips))
     const mouseDown = (e) => {
       let eleLeft = offsetBodyLeft(EleSlider.value)
       let eleWidth = EleSlider.value.offsetWidth
-      active.value = true
+      let left = (e.x - eleLeft) / eleWidth * 100
+      if (left <= 0) left = 0
+      if (left >= 100) left = 100
+      moveLeft.value = left;
       window.onmousemove = (e) => {
         isMousemove.value = true
-        console.log((e.x - eleLeft) / eleWidth * 100)
+        active.value = true
         let left = (e.x - eleLeft) / eleWidth * 100
         if (left <= 0) left = 0
         if (left >= 100) left = 100
-        moveLeft.value = left
+        moveLeft.value = left;
+        context.emit('input',moveLeft.value)
       }
 
 
@@ -79,7 +84,8 @@ export default defineComponent({
       EleSlider,
       moveLeft,
       isMousemove,
-      active
+      active,
+      tips
     }
   }
 })
@@ -87,7 +93,7 @@ export default defineComponent({
 
 <style scoped>
 #Slider_box {
-  padding: 5px 0
+  padding: 5px 20px
 }
 
 #Slider {
@@ -132,7 +138,7 @@ export default defineComponent({
 }
 
 #Slider .tips p {
-  background: rgba(255, 255, 255, .5);
+  background: rgba(255, 255, 255, 1);
   display: inline-block;
   padding: 0 15px;
   border-radius: 40px;

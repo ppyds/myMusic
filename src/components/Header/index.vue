@@ -85,6 +85,7 @@ export default defineComponent({
   /*-webkit-app-region: drag !important;*/
   user-select: none;
   display: flex;
+  flex-shrink: 0;
 }
 
 #user {

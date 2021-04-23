@@ -7,3 +7,9 @@ export const getLyric = params =>axios({
     url:global.BASE_URL +'lyric',
     params
 })
+export const getSongDetail = id =>axios({
+    url:global.BASE_URL + 'song/detail',
+    params:{
+        ids:id
+    }
+})

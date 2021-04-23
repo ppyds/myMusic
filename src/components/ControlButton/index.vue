@@ -43,6 +43,8 @@ export default defineComponent({
   display: flex;
   justify-items: center;
   align-items: center;
+  position: relative;
+  z-index: 9999999999999;
 }
 
 .btn {

@@ -1,30 +1,30 @@
 <template>
-  <div id="box">
-    <div id="top">
-      <div id="nav_box">
-        {{$route.path}}
-        <div id="nav">
-          <router-link to="/mainWindow/home">首页</router-link>
-          <router-link to="/mainWindow/player">播放</router-link>
-          <router-link to="/mainWindow/search">搜索</router-link>
-          <router-link to="/mainWindow/Collect">收藏</router-link>
+    <div id="box">
+      <div id="top">
+        <div id="nav_box">
+          {{$route.path}}
+          <div id="nav">
+            <router-link to="/mainWindow/home">首页</router-link>
+            <router-link to="/mainWindow/player">播放</router-link>
+            <router-link to="/mainWindow/search">搜索</router-link>
+            <router-link to="/mainWindow/Collect">收藏</router-link>
+          </div>
         </div>
-      </div>
 
-      <div id="router_view_box">
         <keep-alive>
-          <router-view/>
+          <router-view id="router_view_box"/>
         </keep-alive>
-      </div>
 
+      </div>
+      <div id="player_bar_box">
+        <PlayerBar/>
+      </div>
     </div>
-    <PlayerBar/>
-  </div>
 </template>
 
 <script>
 import {defineComponent} from "vue";
-import PlayerBar from "@/components/PlayerBar";
+import PlayerBar from "@/views/mainWindow/Player";
 import Header from "@/components/Header";
 import {useRouter} from 'vue'
 export default defineComponent({
@@ -38,15 +38,14 @@ export default defineComponent({
 
 <style scoped>
 #box {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
   border-radius: var(--border-radius_2);
+  --player_bar_box_height:72px
 }
 
 #top {
   display: flex;
-  flex: 1;
+  overflow: hidden;
+  height:calc(100% - var(--player_bar_box_height))
 }
 
 #nav_box {
@@ -84,6 +83,10 @@ export default defineComponent({
   box-sizing: border-box;
   flex: 1;
   overflow: hidden;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+#player_bar_box{
+  height:var(--player_bar_box_height);
 }
 </style>

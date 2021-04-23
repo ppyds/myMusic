@@ -11,7 +11,7 @@
       </div>
       <div id="view">
         <Header/>
-        <Index/>
+        <Index id="box"/>
       </div>
     </div>
   </div>
@@ -72,8 +72,9 @@ export default defineComponent({
 #view {
   backdrop-filter: var(--webkit_backdrop_filter_1);
   height: 100%;
-  display: flex;
-  flex-direction: column;
   width: 100%;
+}
+#box {
+  height:calc(100% - 50px)
 }
 </style>

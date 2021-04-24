@@ -1,8 +1,8 @@
 <template>
   <div id="ControlButton">
-    <div class="btn iconfont" @click="() =>minSizeWindow('mainWindow')">&#xe624;</div>
-    <div class="btn iconfont" @click="max_min_Window">&#xe746;</div>
-    <div class="btn iconfont" @click="() =>closeWindow('mainWindow')">&#xe66c;</div>
+    <div class="btn el-icon-minus" @click="() =>minSizeWindow('mainWindow')"></div>
+    <div class="btn el-icon-full-screen" @click="max_min_Window"></div>
+    <div class="btn el-icon-close" @click="() =>closeWindow('mainWindow')"></div>
   </div>
 </template>
 
@@ -45,8 +45,12 @@ export default defineComponent({
   align-items: center;
   position: relative;
   z-index: 9999999999999;
+  opacity: 0;
+  transition: .5s;
 }
-
+#ControlButton:hover{
+  opacity: 1;
+}
 .btn {
   height: 30px;
   width: 30px;

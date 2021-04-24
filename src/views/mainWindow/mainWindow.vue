@@ -52,7 +52,7 @@ export default defineComponent({
   position: relative;
   height: 100%;
   border-radius: var(--border-radius_2);
-  /*overflow: hidden;*/
+  overflow: hidden;
   box-shadow: #42b983 0 0 5px 0;
 }
 

@@ -32,7 +32,8 @@ export default async function createWindow(options) {
         webPreferences: {
             webSecurity: false,
             nodeIntegration: true,
-            enableRemoteModule: true
+            enableRemoteModule: true,
+            contextIsolation:false
         },
         ...options
     })

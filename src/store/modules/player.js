@@ -20,7 +20,8 @@ let state = {
     playIndex: 0,
     playQueue: [],//播放队列,
     playRulesType: 1,
-    name: ''
+    name: '',
+    singerName:''
 }
 
 let mutations = {
@@ -64,7 +65,8 @@ let actions = {
         context.commit('setLyricArr', [])//清空歌词 重新获取
         context.commit('setLyricTimeArr', [])//清空歌词 重新获取
         context.commit('setSongInfo', {})//清空歌曲详情 重新获取
-        context.commit('setName', data['name'] + ':' + data.artists.map(item => item.name).join(' / '))
+        context.commit('setName', data['name'])
+        context.commit('setSingerName',data.artists.map(item => item.name).join(' / '))
 
         context.dispatch('playSong')//播放歌曲
         context.dispatch('getLyric', data)
@@ -113,7 +115,6 @@ let actions = {
         let playRulesType = context.getters['getPlayRulesType']
         let playQueue = context.getters['getPlayQueue']
         let playIndex = context.getters['getPlayIndex']
-        console.log(type)
         switch (type ? type : playRulesType) {
             case 1:
                 playIndex++

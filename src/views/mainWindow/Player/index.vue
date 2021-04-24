@@ -2,7 +2,6 @@
   <div id="player_bar">
     <div id="content">
       <div class="left" @click="showPlayerInfo">
-        <!--      <img v-if="songInfo['al']" :src="songInfo['al']['picUrl']" alt="">-->
         <Image :_url="songInfo['al']?songInfo['al']['picUrl']:''"/>
       </div>
       <div class="center">
@@ -19,7 +18,7 @@
           <p class="time">
             {{ timeStr }}
           </p>
-          <p class="name">{{ name }}</p>
+          <p class="name">{{ name +' : ' + singerName }}</p>
         </div>
       </div>
       <div class="right">
@@ -36,7 +35,7 @@
       </div>
     </div>
       <transition name="fade">
-        <playerInfo v-show="playerInfoShow"/>
+        <playerInfo v-if="playerInfoShow" :singer-name="singerName" :song-info="songInfo" :mask="songInfo['al']?songInfo['al']['picUrl']:''"/>
       </transition>
   </div>
 </template>
@@ -70,10 +69,11 @@ export default defineComponent({
     let pause = ref(computed(() => store.getters['player/getPause']))
     let timeStr = ref('')
     let name = ref(computed(() => store.getters['player/getName']))
-
+    let singerName = ref(computed(() => store.getters['player/getSingerName']))
     let playerInfoShow = ref(false)
-    watch(currentTime, () =>
-      timeStr.value = millisecondsToMinutes(currentTime.value * 1000) + ' / ' + millisecondsToMinutes(duration.value * 1000)
+    watch(currentTime, () =>{
+          timeStr.value = millisecondsToMinutes(currentTime.value * 1000) + ' / ' + millisecondsToMinutes(duration.value * 1000)
+        }
     )
     const mouseUp = (currentTime) =>
         store.commit('player/setCurrentTime', {
@@ -100,6 +100,7 @@ export default defineComponent({
       pause,
       name,
       playerInfoShow,
+      singerName,
       mouseUp,
       input,
       playClick,
@@ -118,6 +119,7 @@ export default defineComponent({
   flex-shrink: 0;
   position: relative;
   z-index: 3;
+  user-select: none;
 }
 #player_bar #content{
   box-sizing: border-box;

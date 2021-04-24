@@ -50,7 +50,7 @@ for (const modulesKey in modules) {
     modules[modulesKey]['mutations'] = autoMutations(modules[modulesKey]['state'], modules[modulesKey]['mutations'])
     modules[modulesKey]['namespaced'] = true
 }
-const {remote, ipcRenderer} = window.require('electron')
+const {remote, ipcRenderer} = require('electron')
 
 export default createStore({
     state: {

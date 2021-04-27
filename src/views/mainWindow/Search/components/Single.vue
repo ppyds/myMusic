@@ -9,7 +9,11 @@
         <div class="songLong">时长</div>
         <div class="btn">操作</div>
       </dt>
-      <dd @dblclick="getSongUrl([singleArr.songList,index])" v-for="(item,index) in singleArr.songList">
+      <dd
+          @dblclick="getSongUrl([singleArr.songList,index])"
+          v-for="(item,index) in singleArr.songList"
+          :id="item.id"
+      >
         <div class="index">{{index + 1}}</div>
         <div class="name">{{item.name}}</div>
         <div class="singer">{{ item.artists.map(item =>item.name).join(' / ') }}</div>

@@ -2163,11 +2163,6 @@ colors@1.0.3:
   resolved "https://registry.npm.taobao.org/colors/download/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
   integrity sha1-BDP0TYCWgP3rYO0mDxsMJi6CpAs=
 
-"colors@>= 0.3.0":
-  version "1.4.0"
-  resolved "https://registry.npm.taobao.org/colors/download/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
-  integrity sha1-xQSRR51MG9rtLJztMs98fcI2D3g=
-
 combined-stream@^1.0.6, combined-stream@~1.0.6:
   version "1.0.8"
   resolved "https://registry.npm.taobao.org/combined-stream/download/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
@@ -2218,6 +2213,14 @@ compressible@~2.0.16:
   integrity sha1-r1PMprBw1MPAdQ+9dyhqbXzEb7o=
   dependencies:
     mime-db ">= 1.43.0 < 2"
+
+compression-webpack-plugin@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.npm.taobao.org/compression-webpack-plugin/download/compression-webpack-plugin-7.1.2.tgz#f9a1ba84d4879693e29726f6884b382940876597"
+  integrity sha1-+aG6hNSHlpPilyb2iEs4KUCHZZc=
+  dependencies:
+    schema-utils "^3.0.0"
+    serialize-javascript "^5.0.1"
 
 compression@^1.7.4:
   version "1.7.4"
@@ -2901,13 +2904,6 @@ dom-serializer@0:
   dependencies:
     domelementtype "^2.0.1"
     entities "^2.0.0"
-
-dom7@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npm.taobao.org/dom7/download/dom7-3.0.0.tgz#b861ce5d67a6becd7aaa3ad02942ff14b1240331"
-  integrity sha1-uGHOXWemvs16qjrQKUL/FLEkAzE=
-  dependencies:
-    ssr-window "^3.0.0-alpha.1"
 
 domain-browser@^1.1.1:
   version "1.2.0"
@@ -3602,11 +3598,6 @@ find-cache-dir@^3.0.0, find-cache-dir@^3.3.1:
     commondir "^1.0.1"
     make-dir "^3.0.2"
     pkg-dir "^4.1.0"
-
-find-exec@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npm.taobao.org/find-exec/download/find-exec-1.0.1.tgz#c7cc26d6eed293f05542796d32d20094672902d1"
-  integrity sha1-x8wm1u7Sk/BVQnltMtIAlGcpAtE=
 
 find-up@^1.0.0:
   version "1.1.2"
@@ -6431,20 +6422,6 @@ pkg-dir@^4.1.0:
   dependencies:
     find-up "^4.0.0"
 
-play-sound@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.npm.taobao.org/play-sound/download/play-sound-1.1.3.tgz#420e9b0e8ebe6e009c84529a6ac9a094594a6cf8"
-  integrity sha1-Qg6bDo6+bgCchFKaasmglFlKbPg=
-  dependencies:
-    find-exec "1.0.1"
-
-play@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.npm.taobao.org/play/download/play-0.5.0.tgz#f814e67163de29de7b9d9e905df8389ae4ea6347"
-  integrity sha1-+BTmcWPeKd57nZ6QXfg4muTqY0c=
-  dependencies:
-    colors ">= 0.3.0"
-
 plist@^3.0.1:
   version "3.0.2"
   resolved "https://registry.npm.taobao.org/plist/download/plist-3.0.2.tgz?cache=0&sync_timestamp=1616733641365&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fplist%2Fdownload%2Fplist-3.0.2.tgz#74bbf011124b90421c22d15779cee60060ba95bc"
@@ -7898,11 +7875,6 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
-ssr-window@^3.0.0, ssr-window@^3.0.0-alpha.1:
-  version "3.0.0"
-  resolved "https://registry.npm.taobao.org/ssr-window/download/ssr-window-3.0.0.tgz#fd5b82801638943e0cc704c4691801435af7ac37"
-  integrity sha1-/VuCgBY4lD4MxwTEaRgBQ1r3rDc=
-
 ssri@^6.0.1:
   version "6.0.2"
   resolved "https://registry.npm.taobao.org/ssri/download/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
@@ -8184,14 +8156,6 @@ svgo@^1.0.0:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
-
-swiper@^6.5.6:
-  version "6.5.6"
-  resolved "https://registry.npm.taobao.org/swiper/download/swiper-6.5.6.tgz?cache=0&sync_timestamp=1617959319193&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fswiper%2Fdownload%2Fswiper-6.5.6.tgz#4d1dc5cd124696dd765818f2484a1ec8e0d3d3bc"
-  integrity sha1-TR3FzRJGlt12WBjySEoeyODT07w=
-  dependencies:
-    dom7 "^3.0.0"
-    ssr-window "^3.0.0"
 
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"
@@ -8767,6 +8731,11 @@ uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.npm.taobao.org/uuid/download/uuid-3.4.0.tgz?cache=0&sync_timestamp=1607460209394&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuuid%2Fdownload%2Fuuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4=
+
+v8-compile-cache@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npm.taobao.org/v8-compile-cache/download/v8-compile-cache-2.3.0.tgz?cache=0&sync_timestamp=1614993639567&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fv8-compile-cache%2Fdownload%2Fv8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
+  integrity sha1-LeGWGMZtwkfc+2+ZM4A12CRaLO4=
 
 validate-npm-package-license@^3.0.1:
   version "3.0.4"

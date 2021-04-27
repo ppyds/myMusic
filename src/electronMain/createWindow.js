@@ -33,9 +33,13 @@ export default async function createWindow(options) {
             webSecurity: false,
             nodeIntegration: true,
             enableRemoteModule: true,
-            contextIsolation:false
+            contextIsolation: false
         },
+        show:false,
         ...options
+    })
+    win.on('ready-to-show', function () {
+        win.show() // 初始化后再显示
     })
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#' + routePath)

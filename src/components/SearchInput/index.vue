@@ -10,7 +10,9 @@
       </div>
       <ul :class='{active:active}' :style="{height:active?promptArr.length * 30 +'px':'0'}" class="prompt"><!--   提示  -->
         <li v-for="(item,index) in promptArr" :class="promptIndex === index?'active':''"
-            @click="click" @mouseover="promptIndex = index">{{ item }}
+            @click="click" @mouseover="promptIndex = index"
+            :key="item"
+        >{{ item }}
         </li>
       </ul>
     </div>
@@ -60,13 +62,13 @@ export default defineComponent({
       })
     }
     const focus = () => { // 获取焦点时  将事件 触发父组件  并请求提示数据
-      context.emit('_focus')
+      // context.emit('_focus')
       tab(true, '300px')
       if (!data.inputValue.length > 0) return
       tips()
     }
     const blur = () => {// 失去焦点是  触发父组件事件
-      context.emit('_blur')
+      // context.emit('_blur')
       tab(false, '')
     }
     const input = () => {  // 请求提示
@@ -75,7 +77,7 @@ export default defineComponent({
 
     const search = () => {  //搜索  重置promptIndex 更改 inputValue 为搜索的值
       const value = data.promptIndex === -1 ? data.inputValue : data.promptArr[data.promptIndex]
-      context.emit('_get', value)
+      context.emit('_getSearch', value)
       data.promptIndex = -1
       data.inputValue = value
     }
@@ -119,6 +121,8 @@ export default defineComponent({
   position: relative;
   text-indent: var(--px8);
   width: 100%;
+  -webkit-app-region: no-drag !important;
+
 }
 
 #search_input *, #search_input {
@@ -134,7 +138,9 @@ export default defineComponent({
   box-shadow: var(--border_color1) 0 0 5px 0;
   border-radius: var(--border-radius_1);
   min-height: 30px;
-  overflow: hidden
+  overflow: hidden;
+  background-color: var(--color_1);
+  backdrop-filter: var(--webkit_backdrop_filter_1);
 }
 
 .box.active {

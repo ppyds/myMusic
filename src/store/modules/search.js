@@ -12,7 +12,8 @@ const state = {
     limit: 30,
     offset: 0,
     type: '1',
-    searchKey: 'null'
+    searchKey: 'null',
+    searchTipsArr: []
 }
 const mutations = {
     setSearchKey(state, val) {
@@ -24,10 +25,8 @@ const actions = {
     searchSuggestions(context, params) { //搜索提示词
         searchSuggestions(params)
             .then(res => {
-                params.callback(res['result']['allMatch'].map(
-                    (item) => ({
-                        value: item['keyword']
-                    })
+                context.commit('setSearchTipsArr', res['result']['allMatch'].map(
+                    (item) => item['keyword']
                 ))
             })
             .catch(res => {
@@ -68,7 +67,6 @@ const actions = {
                                 songList: [...res.result.songs],
                                 offset: context.getters['getSingleArr'].offset + 1
                             })
-                        console.log(context.getters['getSingleArr'], 555555555555)
                 }
             })
             .finally(() => {

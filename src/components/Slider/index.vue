@@ -1,30 +1,30 @@
 <template>
-    <div id="Slider"
-         ref="EleSlider"
-         :style="{
-  backgroundImage:`linear-gradient(to right,red ${!isMousemove?position / max* 100:moveLeft}%,pink 0)`,
+  <div id="Slider"
+       ref="EleSlider"
+       :style="{
+  backgroundImage:`linear-gradient(to right,var(--color_2) ${!isMousemove?position / max* 100:moveLeft}%,var(--color_1) 0)`,
 }"
-         @mousedown="mouseDown"
-         @mouseup="mouseUp">
-      <div
-          :class="{
+       @mousedown.native="mouseDown"
+       @mouseup="mouseUp">
+<!--    <div-->
+<!--        :class="{-->
+<!--          active:active-->
+<!--        }"-->
+<!--        :style="{-->
+<!--          left:`${!isMousemove?position / max* 100:moveLeft}%`-->
+<!--        }"-->
+<!--        class="radio"-->
+<!--    >-->
+<!--    </div>-->
+    <div
+        :class="{
           active:active
         }"
-          :style="{
-          left:`${!isMousemove?position / max* 100:moveLeft}%`
-        }"
-          class="radio"
-      >
-      </div>
-      <div
-          :class="{
-          active:active
-        }"
-          class="tips"
-      >
-        <p>{{ tips }}</p>
-      </div>
+        class="tips"
+    >
+      <p>{{ tips }}</p>
     </div>
+  </div>
 </template>
 
 <script>
@@ -49,7 +49,7 @@ export default defineComponent({
     let moveLeft = ref(0)
     let EleSlider = ref(null)
     let active = ref(false)
-    let tips = ref(computed(() =>props.tips))
+    let tips = ref(computed(() => props.tips))
     const mouseDown = (e) => {
       let eleLeft = offsetBodyLeft(EleSlider.value)
       let eleWidth = EleSlider.value.offsetWidth
@@ -64,7 +64,7 @@ export default defineComponent({
         if (left <= 0) left = 0
         if (left >= 100) left = 100
         moveLeft.value = left;
-        context.emit('input',moveLeft.value)
+        context.emit('input', moveLeft.value)
       }
 
 

@@ -1,8 +1,7 @@
 import getHttps from '@/http'
 const {banner} = getHttps
 const state = {
-    bannerList: [],
-    ssdadas:[]
+    bannerList: []
 }
 const actions = {
     request_bannerList(context) {

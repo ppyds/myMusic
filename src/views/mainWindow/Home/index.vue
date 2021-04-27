@@ -1,6 +1,8 @@
 <template>
   <div id="home">
-    <Banner class="banner" :list="list"></Banner>
+    <div class="banner_box">
+      <Banner class="banner" :list="list"></Banner>
+    </div>
   </div>
 </template>
 
@@ -31,5 +33,10 @@ export default defineComponent({
 #home{
   flex: 1;
   text-align: right;
+}
+.banner_box{
+  width:80%;
+  margin:0 auto;
+  padding-top: 40px;
 }
 </style>

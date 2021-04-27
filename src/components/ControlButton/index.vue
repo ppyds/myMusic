@@ -1,37 +1,38 @@
 <template>
   <div id="ControlButton">
-    <div class="btn el-icon-minus" @click="() =>minSizeWindow('mainWindow')"></div>
-    <div class="btn el-icon-full-screen" @click="max_min_Window"></div>
-    <div class="btn el-icon-close" @click="() =>closeWindow('mainWindow')"></div>
+    <div class="btn iconfont " @click="() =>minSizeWindow('mainWindow')">&#xe6eb;</div>
+    <div class="btn iconfont " @click="max_min_Window">{{ max ? '&#xe6ec;' : '&#xe6ea;' }}</div>
+    <div class="btn iconfont " @click="() =>closeWindow('mainWindow')">&#xe6b7;</div>
   </div>
 </template>
 
 <script>
-import {defineComponent} from 'vue'
+import {defineComponent,ref} from 'vue'
 import {useStore} from 'vuex'
 
 export default defineComponent({
   name: 'ControlButton',
   setup() {
     const store = useStore()
-    let max = false
+    let max = ref(false)
     const minSizeWindow = () => store._actions.minWindow[0]()
-    const closeWindow = () => store.dispatch('closeWindow','mainWindow')
+    const closeWindow = () => store.dispatch('closeWindow', 'mainWindow')
     const max_min_Window = () => {
-      switch (max) {
+      switch (max.value) {
         case false:
           store._actions.maxWindow[0]('mainWindow')
-          max = true
+          max.value = true
           break
         case true:
           store._actions.activeWindow[0]('mainWindow')
-          max = false
+          max.value = false
       }
     }
     return {
       minSizeWindow,
       closeWindow,
-      max_min_Window
+      max_min_Window,
+      max
     }
   }
 })
@@ -48,9 +49,11 @@ export default defineComponent({
   opacity: 0;
   transition: .5s;
 }
-#ControlButton:hover{
+
+#ControlButton:hover {
   opacity: 1;
 }
+
 .btn {
   height: 30px;
   width: 30px;

@@ -1,6 +1,6 @@
 <template>
   <div id="player_bar">
-    <div id="content">
+    <div id="content" v-if="name">
       <div class="left" @click="showPlayerInfo">
         <Image :_url="songInfo['al']?songInfo['al']['picUrl']:''"/>
       </div>
@@ -10,7 +10,7 @@
             {{ lyricArr[lyricActiveIndex] }}
           </p>
         </div>
-        <div id="Slider_box">
+        <div id="Slider_box" @mousedown.stop="()=>{}">
           <Slider :max="Number(duration)" :position="Number(currentTime)" :tips="lyricArr[tipsIndex]"
                   @input="input" @mouseUp="mouseUp"></Slider>
         </div>
@@ -23,19 +23,19 @@
       </div>
       <div class="right">
         <div class="prev">
-          <i class="el-icon-caret-left" @click="prevClick"></i>
+          <i class="iconfont" @click="prevClick">&#xe6dc;</i>
         </div>
         <div class="play">
-          <i @click="playClick" v-show="!pause" class="el-icon-video-pause"></i>
-          <i @click="playClick" v-show="pause" class="el-icon-video-play"></i>
+          <i @click="playClick" v-show="!pause" class="iconfont">&#xe714;</i>
+          <i @click="playClick" v-show="pause" class="iconfont">&#xe70e;</i>
         </div>
         <div class="next">
-          <i class="el-icon-caret-right" @click="nextClick"></i>
+          <i class="iconfont" @click="nextClick">&#xe6dd;</i>
         </div>
       </div>
     </div>
-      <transition name="fade">
-        <playerInfo v-if="playerInfoShow" :singer-name="singerName" :song-info="songInfo" :mask="songInfo['al']?songInfo['al']['picUrl']:''"/>
+      <transition name="fade" v-if="name">
+        <playerInfo v-show="playerInfoShow" :singer-name="singerName" :song-info="songInfo" :mask="songInfo['al']?songInfo['al']['picUrl']:''"/>
       </transition>
   </div>
 </template>
@@ -120,6 +120,7 @@ export default defineComponent({
   position: relative;
   z-index: 3;
   user-select: none;
+
 }
 #player_bar #content{
   box-sizing: border-box;
@@ -127,6 +128,7 @@ export default defineComponent({
   display: flex;
   position: relative;
   z-index: 1;
+  height:100%
 }
 #player_info_box{
 
@@ -206,11 +208,13 @@ export default defineComponent({
 .right div {
   flex: 1;
   text-align: center;
-  font-size: 30px;
   color: var(--color_2);
 }
+.right div .iconfont{
+  font-size: 30px;
+}
 
-.right .play {
+.right .play .iconfont{
   font-size: 45px;
 }
 </style>

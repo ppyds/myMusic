@@ -1,16 +1,20 @@
 <template>
-  <div class="swiper-container" v-if="list">
-    <div class="swiper-wrapper">
-      <div v-for="item in list" class="swiper-slide">
-        <img :src="item.imageUrl" alt="">
-      </div>
+  <div v-if="list" class="banner-box">
+    <div v-for="(item,index) in list" :class="{
+      active:index===activeIndex,
+      prev:index ===(activeIndex === 0?list.length - 1:activeIndex - 1),
+      next:index === (activeIndex === list.length - 1?0:activeIndex + 1)
+    }"
+         class="item"
+    >
+      <img :src="item.imageUrl" alt="" :key="item.imageUrl">
     </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
   </div>
 </template>
 <script>
-import {defineComponent, onMounted, watch} from "vue";
+import {computed, defineComponent, onUnmounted, ref} from "vue";
+import {onBeforeRouteLeave} from 'vue-router'
+
 export default defineComponent({
   name: 'Banner',
   props: {
@@ -19,60 +23,65 @@ export default defineComponent({
     }
   },
   setup(props, context) {
-    onMounted(() => {
-
+    let timer
+    let activeIndex = ref(1)
+    let list = ref(computed(() => props.list))
+    timer = setInterval(function () {
+      activeIndex.value = activeIndex.value + 1
+      if (activeIndex.value > list.value.length -1) activeIndex.value = 0
+    }, 4000)
+    onBeforeRouteLeave(() => {
+      clearInterval(timer)
     })
-    watch(props, () => {
-      setTimeout(() => {
-        var swiper = new Swiper('.swiper-container', {
-          effect: 'coverflow',
-          grabCursor: true,
-          loop: true,
-          centeredSlides: true,
-          slidesPerView: 'auto',
-          autoplay: {
-            disableOnInteraction: false,   // 手动滑动后继续自动播放
-          },
-          coverflowEffect: {
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: true,
-          },
-          pagination: {
-            el: '.swiper-pagination',
-          },
-        });
-      })
+    onUnmounted(() => {
+      clearInterval(timer)
     })
-    return {}
+    return {
+      activeIndex
+    }
   }
 })
 </script>
 <style>
-/*.el-carousel__container{*/
-/*  height: auto;*/
-/*}*/
-.swiper-container {
-  width: 70vw;
-  border-radius: var(--border-radius_2);
+.banner-box {
+  width: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1400px;
 }
 
-img {
+
+.item {
+  width: 50%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-radius: var(--border-radius_2);
+  overflow: hidden;
+  opacity: 0;
+  transition: .5s;
+  transform: translateX(-100%);
+}
+
+.item img {
   width: 100%
 }
 
-.swiper-slide {
-  background-position: center;
-  background-size: cover;
-  width: 50vw;
-  /*height: 300px;*/
-  overflow: hidden;
-  border-radius: var(--border-radius_2);
+.item.prev {
+  transform: translateX(-100%);
+  opacity: .5;
 }
 
-.swiper-pagination-bullet-active {
-  background: var(--color_2);
+.item.next {
+  transform: translateX(0);
+  opacity: .5;
+
+}
+
+.item.active {
+  opacity: 1;
+  transform: translateX(-50%) scale(1.3);
+  transform-origin: center;
+  z-index: 99;
 }
 </style>

@@ -1,9 +1,15 @@
 <template>
   <div id="lyric" ref="lyric">
     <ul :style="{
-      marginTop:-lyricActiveIndex * 40 + centerPositionY +'px'
+      transform:`translateY(${-lyricActiveIndex * 40 + centerPositionY}px)`
     }" class="lyric-content-box">
-      <li v-for="(item,index) in lyricArr" :class="{active:index === lyricActiveIndex}">{{ item }}</li>
+      <li
+          v-for="(item,index) in lyricArr"
+          :class="{active:index === lyricActiveIndex}"
+          :key="item"
+      >
+        {{ item }}
+      </li>
     </ul>
   </div>
 </template>
@@ -22,10 +28,9 @@ export default defineComponent({
     let centerPositionY = ref(0)
     onMounted(() => {
       centerPositionY.value = lyric.value.clientHeight / 2 - 20
-
     })
     watch(lyricArr, () => {
-      songItem.value = lyric.value.querySelectorAll('li')
+      songItem.value = lyric.value.getElementsByTagName('li')
     })
     window.onresize = () => {
       centerPositionY.value = lyric.value.clientHeight / 2 - 20

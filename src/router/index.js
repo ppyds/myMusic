@@ -5,7 +5,6 @@ import logInRegisterWindowChildren from './logInRegisterWindow'
 const MainWindow = () => import('@/views/mainWindow/mainWindow')
 const LoginRegisterWindow = () => import('@/views/loginRegisterWindow/LoginRegisterWindow')
 const routes = [
-
     {
         path: '/mainWindow',
         component: MainWindow,

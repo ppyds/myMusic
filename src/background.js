@@ -1,5 +1,5 @@
 'use strict'
-
+require('v8-compile-cache')
 import {app, BrowserWindow, Menu, protocol} from 'electron'
 import installExtension, {VUEJS_DEVTOOLS} from 'electron-devtools-installer'
 import createWindow from "@/electronMain/createWindow";
@@ -49,7 +49,10 @@ app.on('ready', async () => {
         frame: false,
         isMultiWindow: false,
     })
-    import('@/electronMain')
+    let set = setImmediate(() => {
+        import('@/electronMain')
+        set = null
+    })
 })
 
 // Exit cleanly on request from parent process in development mode.

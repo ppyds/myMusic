@@ -1,4 +1,4 @@
-<template>
+<template >
   <div id="window_box" :style="{
     padding:isMaxWindow?'0px':''
   }">
@@ -7,7 +7,7 @@
   }">
 
       <div id="window_background">
-        <img alt="" class="backgrond_img" src="https://uploadfile.bizhizu.cn/2014/0124/20140124114300563.jpg">
+        <img alt="" class="backgrond_img" src="@/assets/images/bg1.jpg">
       </div>
       <div id="view">
         <Header/>
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-const {remote} = window.require('electron')
 import Index from '@/views/mainWindow/MainWindowIndex'
 import Header from '@/components/Header'
 import {computed, defineComponent} from 'vue'

@@ -7,11 +7,15 @@
       <router-link :to="'/mainWindow/search/album/'+searchKey" tag="li">专辑</router-link>
       <div class="line"/>
     </div>
-    <transition>
-      <keep-alive>
-        <router-view id="router_box"/>
-      </keep-alive>
-    </transition>
+
+      <router-view id="router_box" v-slot="{ Component }">
+        <keep-alive>
+          <transition>
+          <component :is="Component" />
+          </transition>
+        </keep-alive>
+      </router-view>
+
   </div>
 </template>
 
@@ -24,15 +28,15 @@ export default defineComponent({
   name: "Search",
   setup() {
 
-    let route = useRoute()
-    let router = useRouter()
-    let store = useStore()
-    let searchKey = computed(() => store.getters['search/getSearchKey'])
-    let path = route.path.slice(0, route.path.lastIndexOf('/') + 1);
-    router.replace(path + searchKey.value)
+    const ROUTE = useRoute()
+    const ROUTER = useRouter()
+    const STORE = useStore()
+    let searchKey = computed(() => STORE.getters['search/getSearchKey'])
+    let path = ROUTE.path.slice(0, ROUTE.path.lastIndexOf('/') + 1);
+    ROUTER.replace(path + searchKey.value)
     watch(searchKey, () => {
-      let path = route.path.slice(0, route.path.lastIndexOf('/') + 1);
-      router.replace(path + searchKey.value)
+      let path = ROUTE.path.slice(0, ROUTE.path.lastIndexOf('/') + 1);
+      ROUTER.replace(path + searchKey.value)
     })
     return {
       searchKey

@@ -99,13 +99,20 @@ a, a:hover {
     --padding_12: 12px;
     --color_1: rgba(255, 255, 255, .5);
     --color_2: #42b983;
-    --color_3: red; /*警告色*/
+    --colorRed: red; /*警告色*/
     --border-radius_1: 4px;
     --border-radius_2: 10px;
     --px8: 8px;
     --webkit_backdrop_filter_1: blur(5px);
 }
 
+::-webkit-scrollbar { width:4px; height:2px; }
+
+::-webkit-scrollbar-track-piece { background-color:var(--border_color1) }
+
+::-webkit-scrollbar-thumb:vertical { height:2px; background-color:var(--color_2); }
+
+/*::-webkit-scrollbar-thumb:horizontal { width:2px; background-color:rgba(0,0,0,.5); }*/
 html, body {
     background: rgba(0, 0, 0, 0) !important;
     /*transform: translateZ(0);*/

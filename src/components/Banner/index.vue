@@ -42,7 +42,7 @@ export default defineComponent({
   }
 })
 </script>
-<style>
+<style scoped>
 .banner-box {
   width: 100%;
   position: relative;

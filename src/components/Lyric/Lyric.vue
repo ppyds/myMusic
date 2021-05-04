@@ -5,8 +5,8 @@
     }" class="lyric-content-box">
       <li
           v-for="(item,index) in lyricArr"
-          :class="{active:index === lyricActiveIndex}"
           :key="item"
+          :class="{active:index === lyricActiveIndex}"
       >
         {{ item }}
       </li>
@@ -19,10 +19,16 @@ import {useStore} from 'vuex'
 
 export default defineComponent({
   name: 'Lyric',
+  props: {
+    lyricArr: {
+      type: Array
+
+    }
+  },
   setup(props, context) {
     const store = useStore()
     let lyricActiveIndex = ref(computed(() => store.getters['player/getLyricActiveIndex']))
-    let lyricArr = ref(computed(() => store.getters['player/getLyricArr']))
+    let lyricArr = ref(computed(() => props.lyricArr))
     let lyric = ref(null)
     let songItem = ref([])
     let centerPositionY = ref(0)

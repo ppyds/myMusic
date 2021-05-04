@@ -2,11 +2,13 @@ import {createStore} from 'vuex'
 import search from "@/store/modules/search"
 import home from "@/store/modules/home"
 import player from "@/store/modules/player"
+import collect from "@/store/modules/collect"
 
 let modules = {
     search,
     home,
-    player
+    player,
+    collect
 }
 
 function autoGetters(state, getters) {

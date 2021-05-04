@@ -5,16 +5,15 @@
           {{$route.path}}
           <div id="nav">
             <router-link to="/mainWindow/home">首页</router-link>
-            <router-link to="/mainWindow/player">播放</router-link>
             <router-link to="/mainWindow/search">搜索</router-link>
             <router-link to="/mainWindow/Collect">收藏</router-link>
           </div>
         </div>
-
-        <keep-alive>
-          <router-view id="router_view_box"/>
-        </keep-alive>
-
+        <router-view v-slot="{ Component }" id="router_view_box">
+          <keep-alive>
+            <component :is="Component" />
+          </keep-alive>
+        </router-view>
       </div>
       <div id="player_bar_box">
         <PlayerBar/>

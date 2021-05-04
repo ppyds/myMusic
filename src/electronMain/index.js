@@ -18,7 +18,7 @@ ipcMain.on('setWindow', (event, options, name) => {  //修改窗口位置 大小
     global.windowObjs[name].setSize(options.width, options.height)
     global.windowObjs[name].setPosition(options.x, options.y)
 })
-ipcMain.on('setResizable', (e, bool, name) => {
+ipcMain.on('setResizable', (e, bool, name) => {//是否可以修改窗口大小
     global.windowObjs[name].setResizable(bool)
 })
 ipcMain.on('createWindow', (e, options) => {

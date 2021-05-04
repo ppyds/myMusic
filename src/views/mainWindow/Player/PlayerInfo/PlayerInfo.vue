@@ -22,7 +22,7 @@
       </div>
       <div class="right">
         <div class="lyric_box">
-          <Lyric/>
+          <Lyric v-if="lyricArr.length" :lyric-arr="lyricArr"/>
         </div>
       </div>
     </div>
@@ -47,6 +47,9 @@ export default defineComponent({
     },
     singerName: {
       type: String
+    },
+    lyricArr: {
+      type:Array
     }
   },
   components: {
@@ -57,11 +60,13 @@ export default defineComponent({
     const store = useStore()
     let isMaxWindow = computed(() => store.getters.isMaxWindow)
     let maskUrl = ref(computed(() => props.mask))
+    let lyricArr = ref(computed(() => props.lyricArr))
     return {
       loadingImage,
       maskUrl,
       isMaxWindow,
-      window
+      window,
+      lyricArr
     }
   }
 })

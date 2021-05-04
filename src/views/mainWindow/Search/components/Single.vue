@@ -13,6 +13,7 @@
           @dblclick="getSongUrl([singleArr.songList,index])"
           v-for="(item,index) in singleArr.songList"
           :id="item.id"
+          :class="{active:activeId === item.id}"
       >
         <div class="index">{{index + 1}}</div>
         <div class="name">{{item.name}}</div>
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-import {computed, defineComponent,onMounted} from 'vue'
+import {computed, defineComponent, onMounted, ref} from 'vue'
 import {onBeforeRouteUpdate, useRoute} from 'vue-router'
 import {useStore} from 'vuex'
 
@@ -35,8 +36,9 @@ export default defineComponent({
   setup() {
     let store = useStore()
     let keywords = useRoute().params.value
-    let searchKey = computed(() => store.getters['search/getSearchKey'])
-    let singleArr = computed(() => store.getters['search/getSingleArr'])
+    let searchKey = ref(computed(() => store.getters['search/getSearchKey']))
+    let singleArr = ref(computed(() => store.getters['search/getSingleArr']))
+    let activeId = ref(computed(() => store.getters['player/getActiveId']))
     let getSearch = (data) => {
       if (keywords === 'null') return
       store.dispatch('search/search', data)
@@ -52,7 +54,10 @@ export default defineComponent({
         type: 1
       })
     })
-    let getSongUrl = (data) =>store.dispatch('player/getSongUrl',data)
+    let getSongUrl = (data) =>{
+      console.log(data, 555555555)
+      store.dispatch('player/getSongUrl',data)
+    }
     let scroll = (e) => {
       let targetEle = e.target
       if(targetEle.scrollTop + targetEle.clientHeight >targetEle.scrollHeight - 30)
@@ -63,6 +68,7 @@ export default defineComponent({
     return {
       searchKey,
       singleArr,
+      activeId,
       getSongUrl,
       scroll
     }
@@ -95,7 +101,8 @@ dl dd {
   line-height: 30px;
   transition: .2s;
 }
-dl dd:hover{
+dl dd:hover,
+dl dd.active{
   background: var(--color_1);
   color: var(--color_2);
 }

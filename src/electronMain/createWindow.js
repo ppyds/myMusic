@@ -36,17 +36,19 @@ export default async function createWindow(options) {
             contextIsolation: false
         },
         show:false,
-        ...options
+        ...options,
+        devTools: true
     })
     win.on('ready-to-show', function () {
         win.show() // 初始化后再显示
     })
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#' + routePath)
-        if (!process.env.IS_TEST) win.webContents.openDevTools()
+        if (!process.env.IS_TEST) win.webContents.openDevTools({mode:'undocked'})
     } else {
         createProtocol('app')
         await win.loadURL('app://./index.html/#' + routePath)
+        win.webContents.openDevTools({mode:'undocked'})
     }
 
 

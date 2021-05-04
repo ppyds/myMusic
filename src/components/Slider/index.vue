@@ -100,6 +100,7 @@ export default defineComponent({
   position: relative;
   height: 3px;
   user-select: none;
+  width:100%
 }
 
 #Slider .tips {
